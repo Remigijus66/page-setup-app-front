@@ -1,13 +1,37 @@
 import './App.css';
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import InfoPage from "./pages/InfoPage";
+import MainContext from "./context/MainContext";
+import AgileBoxPage from './pages/AgileBoxPage';
+import CopyOfAgileBoxPage from './pages/CopyOfAgileBox';
 import IndexPage from './pages/IndexPage';
 import IndexContext from './context/IndexContext';
 
 
 function App() {
 
+  const [user, setUser] = useState("Andrius")
+  const [age, setAge] = useState(56)
+  const [color, setColor] = useState("red")
+  const [text, setText] = useState("Initial text")
+  const [size, setSize] = useState([200, 200])
+
+  const states = {
+    user,
+    setUser,
+    age,
+    setAge,
+    color,
+    setColor,
+    text,
+    setText,
+    size,
+    setSize
+  }
+
   const [logoImage, setLogoImage] = useState('https://logopond.com/logos/b3f91fee4ad7d1c8b293acfc616c2bb6.png')
+  // const [logoImage, setLogoImage] = useState('../public/logo192.png')
   const [logoWidth, setLogoWidth] = useState('100')
   const [topLinks, setTopLinks] = useState([{ url: 'https://www.delfi.lt/', name: 'Link1' }, { url: 'https://www.delfi.lt/', name: 'Link2' }])
   const [topColor, setTopColor] = useState('white')
@@ -26,7 +50,7 @@ function App() {
   const [logged, setLogged] = useState('')
   const [message, setMessage] = useState('')
   const [darkmode, setDarkmode] = useState('')
-  const states = {
+  const states1 = {
     logoImage,
     setLogoImage,
     logoWidth,
@@ -102,12 +126,17 @@ function App() {
     <div className="p50">
 
 
-      <IndexContext.Provider value={states}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<IndexPage />} />
-          </Routes>
-        </BrowserRouter>
+      <IndexContext.Provider value={states1}>
+        <MainContext.Provider value={states}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<IndexPage />} />
+              <Route path="/info" element={<InfoPage />} />
+              <Route path="/agile" element={<AgileBoxPage />} />
+              <Route path="/copy" element={<CopyOfAgileBoxPage />} />
+            </Routes>
+          </BrowserRouter>
+        </MainContext.Provider>
       </IndexContext.Provider>
 
     </div>
